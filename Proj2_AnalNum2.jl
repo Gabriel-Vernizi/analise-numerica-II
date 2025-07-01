@@ -178,7 +178,7 @@ end
 begin
 
 #L-string -> LaTeX str
-a = L"e^{-t} + t^{2} - 2t + 2" 
+a = L"-e^{-t} + t^{2} - 2t + 2" 
 b = L"\frac{4}{3} e^{3t} - t - \frac{1}{3}"
 
 #Euler - (a)
