@@ -106,7 +106,7 @@ begin
 	#Item (a) - Euler
 	f(t,y) = t*t-y
 	h = 0.1
-	sol_exata_a(x) = -exp(-x)+x*x-2*x+2
+	sol_exata_a(x) = -exp(-x)+x*x-2*x+2  #usada em todas as questões
 	t1,y1 = edo_euler(f,(0,1),1;h=h)
 	t2,y2 = edo_euler(f,(0,1),1;h=h*h)
 	get_error(sol_exata_a,t1,y1)
@@ -117,7 +117,7 @@ begin
 	#Item (b) - Euler
 	f2(t,y) = 3y+3t
 	H2 = 0.1
-	sol_exata_b(x) = 4/3*exp(3x) - x - 1/3
+	sol_exata_b(x) = 4/3*exp(3x) - x - 1/3 #usada em todas as questões
 	e1,ey1 = edo_euler(f2,(0,1),1;h=H2)
 	e2,ey2 = edo_euler(f2,(0,1),1;h=H2*H2)
 	get_error(sol_exata_b,e2,ey2)
@@ -128,6 +128,7 @@ end
 begin
 	# Item (a) - Taylor
 	local g1(t,y) =  t*t-y
+
 	# d/dt (g1) = g1_t + g1_y * g1
 	local gg1(t,y) = 2t -1 * g1(t,y)
 
@@ -175,116 +176,111 @@ end
 
 # ╔═╡ 256d11af-90c2-481b-ab7e-b13c9fef96d2
 begin
-# Labels LaTeX
-a = L"e^{-t} + t^{2} - 2t + 2"
+
+#L-string -> LaTeX str
+a = L"e^{-t} + t^{2} - 2t + 2" 
 b = L"\frac{4}{3} e^{3t} - t - \frac{1}{3}"
 
-# Plot Método de Euler - Problema (a)
+#Euler - (a)
 fig_a = plot(xlims=(0,1), background_color=:black, title="Método de Euler (a)")
 plot!(fig_a, sol_exata_a, lw=3, ls=:dash, color=:darkblue, label=a)
 plot!(fig_a, t1, y1, color=:lightgreen, label="Euler Approx (h=0.1)")
 plot!(fig_a, t2, y2, color=:orange, label="Euler Approx (h=0.01)")
 plot!(fig_a, t1, get_error(sol_exata_a, t1, y1), lw=2, ls=:dash, color=:yellow, label="Erro (h=0.1)")
 plot!(fig_a, t2, get_error(sol_exata_a, t2, y2), lw=2, ls=:dash, color=:darkred, label="Erro (h=0.01)")	
-savefig(fig_a, "C:\\Códigos\\Imagens-Projeto_Anal2\\Euler_a.png")
+savefig(fig_a, "Euler_a.png")
 
-# Plot Método de Euler - Problema (b)
+#Euler - (b)
 fig_b = plot(xlims=(0,1), background_color=:black, title="Método de Euler (b)")
 plot!(fig_b, sol_exata_b, lw=3, ls=:dash, color=:darkblue, label=b)
 plot!(fig_b, e1, ey1, color=:lightgreen, label="Euler Approx (h=0.1)")
 plot!(fig_b, e2, ey2, color=:orange, label="Euler Approx (h=0.01)")
 plot!(fig_b, e1, get_error(sol_exata_b, e1, ey1), lw=2, ls=:dash, color=:yellow, label="Erro (h=0.1)")
 plot!(fig_b, e2, get_error(sol_exata_b, e2, ey2), lw=2, ls=:dash, color=:darkred, label="Erro (h=0.01)")
-savefig(fig_b, "C:\\Códigos\\Imagens-Projeto_Anal2\\Euler_b.png")
+savefig(fig_b, "Euler_b.png")
 
-# Plot Método de Taylor - Problema (a)
+#Taylor - (a)
 fig_taylor_a = plot(xlims=(0,1), background_color=:black, title="Método de Taylor (a)")
 plot!(fig_taylor_a, sol_exata_a, lw=3, ls=:dash, color=:darkblue, label=a)
 plot!(fig_taylor_a, t3, y3, color=:lightgreen, label="Taylor Approx (h=0.1)")
 plot!(fig_taylor_a, t4, y4, color=:orange, label="Taylor Approx (h=0.001)")
 plot!(fig_taylor_a, t3, get_error(sol_exata_a, t3, y3), lw=2, ls=:dash, color=:yellow, label="Erro (h=0.1)")
 plot!(fig_taylor_a, t4, get_error(sol_exata_a, t4, y4), lw=2, ls=:dash, color=:darkred, label="Erro (h=0.001)")
-savefig(fig_taylor_a, "C:\\Códigos\\Imagens-Projeto_Anal2\\Taylor_a.png")
+savefig(fig_taylor_a, "Taylor_a.png")
 
-# Plot Método de Taylor - Problema (b)
+#Taylor - (b)
 fig_taylor_b = plot(xlims=(0,1), background_color=:black, title="Método de Taylor (b)")
 plot!(fig_taylor_b, sol_exata_b, lw=3, ls=:dash, color=:darkblue, label=b)
 plot!(fig_taylor_b, t5, y5, color=:lightgreen, label="Taylor Approx (h=0.1)")
 plot!(fig_taylor_b, t6, y6, color=:orange, label="Taylor Approx (h=0.001)")
 plot!(fig_taylor_b, t5, get_error(sol_exata_b, t5, y5), lw=2, ls=:dash, color=:yellow, label="Erro (h=0.1)")
 plot!(fig_taylor_b, t6, get_error(sol_exata_b, t6, y6), lw=2, ls=:dash, color=:darkred, label="Erro (h=0.001)")
-savefig(fig_taylor_b, "C:\\Códigos\\Imagens-Projeto_Anal2\\Taylor_b.png")
+savefig(fig_taylor_b, "Taylor_b.png")
 
-# Plot Erros detalhados - Euler (a)
+#Erros - Euler (a)
 fig_erro_a = plot(xlims=(0,1), background_color=:black, title="Erros - Método de Euler (a)")
 scatter!(fig_erro_a, t1, get_error(sol_exata_a, t1, y1), lw=2, ls=:dash, color=:yellow, label="Erro (h=0.1)")
 indices1 = round.(Int, range(1, length(t2), length=30))
 scatter!(fig_erro_a, t2[indices1], get_error(sol_exata_a, t2, y2)[indices1], lw=2, ls=:dash, color=:darkred, label="Erro (h=0.01)")
-savefig(fig_erro_a, "C:\\Códigos\\Imagens-Projeto_Anal2\\Erros_Euler_a.png")
+savefig(fig_erro_a, "Erros_Euler_a.png")
 
-# Plot Erros detalhados - Euler (b)
+#Erros - Euler (b)
 fig_erro_b = plot(xlims=(0,1), background_color=:black, title="Erros - Método de Euler (b)")
 scatter!(fig_erro_b, e1, get_error(sol_exata_b, e1, ey1), lw=2, ls=:dash, color=:yellow, label="Erro (h=0.1)")
 indices2 = round.(Int, range(1, length(e2), length=30))
 scatter!(fig_erro_b, e2[indices2], get_error(sol_exata_b, e2, ey2)[indices2], lw=2, ls=:dash, color=:darkred, label="Erro (h=0.01)")
-savefig(fig_erro_b, "C:\\Códigos\\Imagens-Projeto_Anal2\\Erros_Euler_b.png")
+savefig(fig_erro_b, "Erros_Euler_b.png")
 
-# Plot Erros detalhados - Taylor (a)
+#Erros - Taylor (a)
 fig_erro_taylor_a = plot(xlims=(0,1), background_color=:black, title="Erros - Método de Taylor (a)")
 scatter!(fig_erro_taylor_a, t3, get_error(sol_exata_a, t3, y3), lw=2, ls=:dash, color=:yellow, label="Erro (h=0.1)")
 indices3 = round.(Int, range(1, length(t4), length=30))
 scatter!(fig_erro_taylor_a, t4[indices3], get_error(sol_exata_a, t4, y4)[indices3], lw=2, ls=:dash, color=:darkred, label="Erro (h=0.001)")
-savefig(fig_erro_taylor_a, "C:\\Códigos\\Imagens-Projeto_Anal2\\Erros_Taylor_a.png")
+savefig(fig_erro_taylor_a, "Erros_Taylor_a.png")
 
-# Plot Erros detalhados - Taylor (b)
+#Erros - Taylor (b)
 fig_erro_taylor_b = plot(xlims=(0,1), background_color=:black, title="Erros - Método de Taylor (b)")
 scatter!(fig_erro_taylor_b, t5, get_error(sol_exata_b, t5, y5), lw=2, ls=:dash, color=:yellow, label="Erro (h=0.1)")
 indices4 = round.(Int, range(1, length(t6), length=30))
 scatter!(fig_erro_taylor_b, t6[indices4], get_error(sol_exata_b, t6, y6)[indices4], lw=2, ls=:dash, color=:darkred, label="Erro (h=0.001)")
-savefig(fig_erro_taylor_b, "C:\\Códigos\\Imagens-Projeto_Anal2\\Erros_Taylor_b.png")
+savefig(fig_erro_taylor_b, "Erros_Taylor_b.png")
 end
 
 # ╔═╡ 12f34795-1dd0-442a-9c0e-ffb6e8dabc15
 begin
-	# Plot Método de RK2 - Problema (a)
+	#RK2 - (a)
 	fig_rk2_a = plot(xlims=(0,1), background_color=:black, title="Método de RK2 (a)")
 	plot!(fig_rk2_a, sol_exata_a, lw=3, ls=:dash, color=:darkblue, label=a)
 	plot!(fig_rk2_a, t_rk2_a1, y_rk2_a1, color=:lightgreen, label="RK2 Approx (h=0.1)")
 	plot!(fig_rk2_a, t_rk2_a2, y_rk2_a2, color=:orange, label="RK2 Approx (h=0.001)")
 	plot!(fig_rk2_a, t_rk2_a1, get_error(sol_exata_a, t_rk2_a1, y_rk2_a1), lw=2, ls=:dash, color=:yellow, label="Erro (h=0.1)")
 	plot!(fig_rk2_a, t_rk2_a2, get_error(sol_exata_a, t_rk2_a2, y_rk2_a2), lw=2, ls=:dash, color=:darkred, label="Erro (h=0.001)")
-	savefig(fig_rk2_a, "C:/Códigos/Imagens-Projeto_Anal2/RK2_a.png")
+	savefig(fig_rk2_a, "RK2_a.png")
 	
-	# Plot Método de RK2 - Problema (b)
+	#RK2 - (b)
 	fig_rk2_b = plot(xlims=(0,1), background_color=:black, title="Método de RK2 (b)")
 	plot!(fig_rk2_b, sol_exata_b, lw=3, ls=:dash, color=:darkblue, label=b)
 	plot!(fig_rk2_b, t_rk2_b1, y_rk2_b1, color=:lightgreen, label="RK2 Approx (h=0.1)")
 	plot!(fig_rk2_b, t_rk2_b2, y_rk2_b2, color=:orange, label="RK2 Approx (h=0.001)")
 	plot!(fig_rk2_b, t_rk2_b1, get_error(sol_exata_b, t_rk2_b1, y_rk2_b1), lw=2, ls=:dash, color=:yellow, label="Erro (h=0.1)")
 	plot!(fig_rk2_b, t_rk2_b2, get_error(sol_exata_b, t_rk2_b2, y_rk2_b2), lw=2, ls=:dash, color=:darkred, label="Erro (h=0.001)")
-	savefig(fig_rk2_b, "C:/Códigos/Imagens-Projeto_Anal2/RK2_b.png")
+	savefig(fig_rk2_b, "RK2_b.png")
 	
-	# Plot Erros detalhados - RK2 (a)
+	#Erros - RK2 (a)
 	fig_erro_rk2_a = plot(xlims=(0,1), background_color=:black, title="Erros - Método de RK2 (a)")
 	scatter!(fig_erro_rk2_a, t_rk2_a1, get_error(sol_exata_a, t_rk2_a1, y_rk2_a1), lw=2, ls=:dash, color=:yellow, label="Erro (h=0.1)")
 	indices5 = round.(Int, range(1, length(t_rk2_a2), length=30))
 	scatter!(fig_erro_rk2_a, t_rk2_a2[indices5], get_error(sol_exata_a, t_rk2_a2, y_rk2_a2)[indices5], lw=2, ls=:dash, color=:darkred, label="Erro (h=0.001)")
-	savefig(fig_erro_rk2_a, "C:/Códigos/Imagens-Projeto_Anal2/Erros_RK2_a.png")
+	savefig(fig_erro_rk2_a, "Erros_RK2_a.png")
 	
-	# Plot Erros detalhados - RK2 (b)
+	#Erros - RK2 (b)
 	fig_erro_rk2_b = plot(xlims=(0,1), background_color=:black, title="Erros - Método de RK2 (b)")
 	scatter!(fig_erro_rk2_b, t_rk2_b1, get_error(sol_exata_b, t_rk2_b1, y_rk2_b1), lw=2, ls=:dash, color=:yellow, label="Erro (h=0.1)")
 	indices6 = round.(Int, range(1, length(t_rk2_b2), length=30))
 	scatter!(fig_erro_rk2_b, t_rk2_b2[indices6], get_error(sol_exata_b, t_rk2_b2, y_rk2_b2)[indices6], lw=2, ls=:dash, color=:darkred, label="Erro (h=0.001)")
-	savefig(fig_erro_rk2_b, "C:/Códigos/Imagens-Projeto_Anal2/Erros_RK2_b.png")
+	savefig(fig_erro_rk2_b, "Erros_RK2_b.png")
 	
 end
-
-# ╔═╡ bac3eae0-98ca-4531-8a30-be2afeff9983
-simpson_quadrature(x->x*x*x + 2x,(0,5);n=4)
-
-# ╔═╡ 0a581599-165f-4099-ad8e-c5c2b2ac8c4c
-trapezoid_quadrature(x -> 2, (0.0, 2.0))
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
